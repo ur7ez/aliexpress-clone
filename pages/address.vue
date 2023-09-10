@@ -51,7 +51,7 @@
               class="mt-6 bg-gradient-to-r from-[#FE630C] to-[#FF3200] w-full text-white text-[21px] font-semibold p-1.5 rounded-full"
           >
             <div v-if="!isWorking">Update Address</div>
-            <Icon v-else name="eos-icons:loading" size="25" class="mr-2" />
+            <Icon v-else name="eos-icons:loading" size="25" class="mr-2"/>
           </button>
         </form>
       </div>
@@ -62,8 +62,10 @@
 <script setup>
 import MainLayout from "~/layouts/MainLayout.vue";
 import {useUserStore} from "~/stores/user";
+import {useSupabaseUser} from "@nuxtjs/supabase/dist/runtime/composables/useSupabaseUser";
 
 const userStore = useUserStore();
+const user = useSupabaseUser();
 
 let contactName = ref(null);
 let address = ref(null);
@@ -76,11 +78,22 @@ let isUpdate = ref(false);
 let isWorking = ref(false);
 let error = ref(null);
 
-watchEffect(() => {
+watchEffect(async () => {
+  currentAddress.value = await useFetch(`/api/prisma/get-address-by-user/${user.value.id}`);
+
+  if (currentAddress.value.data) {
+    contactName.value = currentAddress.value.data.name;
+    address.value = currentAddress.value.data.address;
+    zipCode.value = currentAddress.value.data.zipcode;
+    city.value = currentAddress.value.data.city;
+    country.value = currentAddress.value.data.country;
+
+    isUpdate.value = true;
+  }
   userStore.isLoading = false;
 })
 
-const  submit = async  () => {
+const submit = async () => {
   isWorking.value = true;
   error.value = null;
 
@@ -116,6 +129,36 @@ const  submit = async  () => {
     return;
   }
 
-  // more later
+  if (isUpdate.value) {
+    await useFetch(`/api/prisma/update-address/${currentAddress.value.data.id}`, {
+      method: 'PATCH',
+      body: {
+        userId: user.value.id,
+        name: contactName.value,
+        address: address.value,
+        zipCode: zipCode.value,
+        city: city.value,
+        country: country.value,
+      }
+    });
+
+    isWorking = false;
+    return navigateTo('/checkout');
+  }
+
+  await useFetch('/api/prisma/add-address/', {
+    method: 'POST',
+    body: {
+      userId: user.value.id,
+      name: contactName.value,
+      address: address.value,
+      zipCode: zipCode.value,
+      city: city.value,
+      country: country.value,
+    },
+  });
+
+  isWorking = false;
+  return navigateTo('/checkout');
 }
 </script>
