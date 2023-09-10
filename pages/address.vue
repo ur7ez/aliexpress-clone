@@ -62,7 +62,6 @@
 <script setup>
 import MainLayout from "~/layouts/MainLayout.vue";
 import {useUserStore} from "~/stores/user";
-import {useSupabaseUser} from "@nuxtjs/supabase/dist/runtime/composables/useSupabaseUser";
 
 const userStore = useUserStore();
 const user = useSupabaseUser();

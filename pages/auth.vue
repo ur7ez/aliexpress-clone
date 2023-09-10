@@ -22,24 +22,21 @@
           class="mt-4 flex items-center justify-center gap-3 p-1.5 w-full border hover:bg-gray-100 rounded-full text-lg font-semibold"
       >
         <img class="w-full max-w-[30px]" src="/github-logo.png" alt="">
-        <div>GitHub</div>
+        <div>Github</div>
       </button>
     </div>
   </div>
 </template>
 
 <script setup>
-// import {useSupabaseClient} from "@nuxtjs/supabase/dist/runtime/composables/useSupabaseClient";
-// import {useSupabaseUser} from "@nuxtjs/supabase/dist/runtime/composables/useSupabaseUser";
+const client = useSupabaseClient();
+const user = useSupabaseUser();
 
-// const client = useSupabaseClient();
-// const  user = useSupabaseUser();
-
-// watchEffect(() => {
-//   if (user.value) {
-//     return navigateTo('/');
-//   }
-// })
+watchEffect(() => {
+  if (user.value) {
+    return navigateTo('/');
+  }
+})
 
 const login = async (prov) => {
   const { data, error } = await client.auth.signInWithOAuth({

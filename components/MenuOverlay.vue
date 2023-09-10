@@ -41,7 +41,7 @@
         </li>
 
         <li
-            v-if="false"
+            v-if="user"
             @click="signOut()"
             class="relative flex items-center justify-between py-2.5 border-b px-3 hover:bg-gray-100 cursor-pointer"
         >
@@ -68,13 +68,11 @@
 
 <script setup>
 import {useUserStore} from "~/stores/user";
-// import {useSupabaseClient} from "@nuxtjs/supabase/dist/runtime/composables/useSupabaseClient";
-// import {useSupabaseUser} from "@nuxtjs/supabase/dist/runtime/composables/useSupabaseUser";
 
 const userStore = useUserStore();
 
-// const client = useSupabaseClient();
-// const  user = useSupabaseUser();
+const client = useSupabaseClient();
+const user = useSupabaseUser();
 
 const goTo = (url) => {
   userStore.isMenuOverlay = false;
