@@ -105,7 +105,7 @@
             </div>
           </div>
         </div>
-        <NuxtLink to="`/shoppingcart`" class="flex items-center">
+        <NuxtLink to="/shoppingcart" class="flex items-center">
           <button
               class="relative md:block hidden"
               @mouseenter="isCartHover = true"
