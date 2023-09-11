@@ -1,63 +1,33 @@
-# Nuxt 3 Minimal Starter
+# AliExpress Clone / (aliexpress-clone)
 
-Look at the [Nuxt 3 documentation](https://nuxt.com/docs/getting-started/introduction) to learn more.
+_Build with help and inspiration of tutorial video by [JOHN WEEKS DEV](https://youtu.be/dVcCRFVhz74?si=iGO8OsTB8LRvrUBD)_
 
-## Setup
+If you'd like a step-by-step guide on how to build this and other projects check out this awesome [YouTube channel](https://www.youtube.com/@johnweeksdev).
 
-Make sure to install the dependencies:
+## App Setup (localhost)
 
-```bash
-# npm
-npm install
-
-# pnpm
-pnpm install
-
-# yarn
-yarn install
+git clone this project
 ```
+cp .env.example .env
 
-## Development Server
+npm i
 
-Start the development server on `http://localhost:3000`:
+npx prisma generate
 
-```bash
-# npm
 npm run dev
-
-# pnpm
-pnpm run dev
-
-# yarn
-yarn dev
 ```
 
-## Production
+You'll have to setup a Supabase account & Stripe account, then add all the details in to your .env file.
 
-Build the application for production:
+Once you've connected your application to Supabase. You'll also need to setup the Auth Providers:
+[Google](https://cloud.google.com) and 
+[Github](https://github.com/settings/developers)
 
-```bash
-# npm
-npm run build
+    https://supabase.com/docs/guides/auth/social-login/auth-google
+    https://supabase.com/docs/guides/auth/social-login/auth-github
 
-# pnpm
-pnpm run build
+Now run the command to migrate your database tables and run your seed file.
 
-# yarn
-yarn build
 ```
-
-Locally preview production build:
-
-```bash
-# npm
-npm run preview
-
-# pnpm
-pnpm run preview
-
-# yarn
-yarn preview
+npx prisma migrate dev --name init
 ```
-
-Check out the [deployment documentation](https://nuxt.com/docs/getting-started/deployment) for more information.
