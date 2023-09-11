@@ -1,7 +1,7 @@
 <template>
   <MainLayout>
     <div id="ShoppingCartPage" class="mt-4 max-w-[1200px] mx-auto px-2">
-      <div v-if="false" class="flex items-center justify-center h-[500px]">
+      <div v-if="!userStore.cart.length" class="flex items-center justify-center h-[500px]">
         <div class="pt-20">
           <img
               class="mx-auto"
@@ -11,7 +11,7 @@
           >
 
           <div class="text-xl text-center mt-4">No items yet?</div>
-          <div v-if="true" class="flex text-center">
+          <div v-if="!user" class="flex text-center">
             <NuxtLink
                 to="/auth"
                 class="bg-[#FD374F] w-full text-white text-[21px] font-semibold p-1.5 rounded-full mt-4"
@@ -22,11 +22,11 @@
         </div>
       </div>
 
-      <div v-else class="md:flex gap-4 justify-center mx-auto w-full">
+      <div v-else class="md:flex gap-4 justify-between mx-auto w-full">
         <div class="md:w-[65%]">
           <div class="bg-white rounded-lg p-4">
             <div class="text-2xl font-bold mb-2">
-              Shopping Cart (0)
+              Shopping Cart ({{ userStore.cart.length }})
             </div>
           </div>
 
@@ -35,7 +35,7 @@
           </div>
 
           <div id="Items" class="bg-white rounded-lg p-4 mt-4">
-            <div v-for="product in products">
+            <div v-for="product in userStore.cart">
               <CartItem
                   :product="product"
                   :selectedArray="selectedArray"
@@ -83,6 +83,7 @@ import MainLayout from "~/layouts/MainLayout.vue";
 import {useUserStore} from "~/stores/user";
 
 const userStore = useUserStore();
+const user = useSupabaseUser();
 
 let selectedArray = ref([]);
 
@@ -123,28 +124,11 @@ const goToCheckout = () => {
   let ids = [];
   userStore.checkout = [];
   selectedArray.value.forEach(item => ids.push(item.id));
-  let res = userStore.cart.filter(item => {
+  let res = userStore.cart.filter((item) => {
     return ids.indexOf(item.id) != -1;
   })
   res.forEach(item => userStore.checkout.push(toRaw(item)));
 
   return navigateTo('/checkout');
 }
-
-const products = [
-  {
-    id: 1,
-    title: "Title 1",
-    description: "This is a description",
-    url: "https://picsum.photos/id/7/800/800",
-    price: 9899
-  },
-  {
-    id: 2,
-    title: "Title 2",
-    description: "This is a description",
-    url: "https://picsum.photos/id/71/800/800",
-    price: 9699
-  },
-];
 </script>
