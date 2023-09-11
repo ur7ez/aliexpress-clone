@@ -71,6 +71,14 @@
                 <img class="h-6" :src="card" alt="">
               </div>
             </div>
+
+                        <div class="border-b"/>
+
+                        <div class="text-lg font-semibold mb-2 mt-2">Buyer Protection</div>
+                        <p class="my-2">
+                            Get full refund if the item is not as described or if is not delivered
+                        </p>
+
           </div>
         </div>
       </div>
