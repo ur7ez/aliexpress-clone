@@ -174,7 +174,7 @@ const stripeInit = async () => {
   clientSecret = res.client_secret;
 
   elements = stripe.elements();
-  var style = {
+  const style = {
     base: {
       fontSize: "18px",
     },
@@ -245,5 +245,5 @@ const showError = (errorMsgText) => {
 
   errorMsg.textContent = errorMsgText;
   setTimeout(() => { errorMsg.textContent = "" }, 4000);
-}
+};
 </script>

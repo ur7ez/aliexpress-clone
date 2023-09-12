@@ -89,7 +89,7 @@
                   class="mr-2"
               />
               <button class="flex items-center h-[100%] p-1.5 px-2 bg-[#FF4646]">
-                <Icon name="ph:magnifying-glass" size="20" color="#ffffff"/>
+                <Icon name="ph:magnifying-glass" size="20" color="#FFFFFF"/>
               </button>
             </div>
             <!-- Search results data rows -->
